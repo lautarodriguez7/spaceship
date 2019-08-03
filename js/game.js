@@ -7,12 +7,15 @@
         KEY_RIGHT = 39,
         KEY_DOWN = 40;
 
+    var player = new Rectangle(90, 280, 10, 10);
+
     var canvas = null,
         ctx = null,
         x = 50,
         y = 50,
         lastPress = null,
         pressing = [],
+        shots = [],
         pause = true;
 
     function init() {
