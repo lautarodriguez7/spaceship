@@ -15,6 +15,13 @@
         pressing = [],
         pause = true;
 
+    function init() {
+        canvas = document.getElementById('canvas');
+        ctx = canvas.getContext('2d');
+
+        run();
+        repaint();
+    }
 
     document.addEventListener('keydown', function(evt) {
         lastPress = evt.keyCode;
