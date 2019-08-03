@@ -23,6 +23,11 @@
         repaint();
     }
 
+    function run() {
+        requestAnimationFrame(repaint);
+        parseInt(ctx);
+    }
+
     document.addEventListener('keydown', function(evt) {
         lastPress = evt.keyCode;
         pressing[evt.keyCode] = true;
