@@ -2,12 +2,11 @@
     'use strict';
     window.addEventListener('load', init, false);
     var KEY_ENTER = 13,
+        KEY_SPACE = 32,
         KEY_LEFT = 37,
         KEY_UP = 38,
         KEY_RIGHT = 39,
         KEY_DOWN = 40;
-
-    var player = new Rectangle(90, 280, 10, 10);
 
     var canvas = null,
         ctx = null,
@@ -16,19 +15,22 @@
         lastPress = null,
         pressing = [],
         shots = [],
-        pause = true;
+        player = new Rectangle(90, 280, 10, 10),
+        pause;
 
     function init() {
         canvas = document.getElementById('canvas');
         ctx = canvas.getContext('2d');
-
+        canvas.width= 200;
+        canvas.height= 300;
+        
         run();
         repaint();
     }
 
     function run() {
         requestAnimationFrame(repaint);
-        parseInt(ctx);
+        paint(ctx);
     }
 
     function act() {
@@ -59,11 +61,14 @@
             lastPress = null;
         }
 
-        // New shots
+        // New shot
+        if (lastPress == KEY_SPACE)
+
+        // Move shots
         for (var i = 0, l = shots.length; i < l; i++) {
             shots[i].y -= 10;
             if (shots[i].y < 0) {
-                shots.splice(i --, 1);
+                shots.splice(i--, 1); //(i--(position), 1(number of eliminations))
                 l--;
             }
         }
