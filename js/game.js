@@ -34,29 +34,38 @@
     function act() {
         if (!pause) {
         // Move rect
-        if (pressing[KEY_UP])
-            y -= 10;
+        //if (pressing[KEY_UP])
+        //    y -= 10;  //just moving horizontal
         if (pressing[KEY_RIGHT])
             x += 10;
-        if (pressing[KEY_DOWN])
-            y += 10;
+        //if (pressing[KEY_DOWN])
+        //    y += 10;  //just moving horizontal
         if (pressing[KEY_LEFT])
             x -= 10;
 
         // Out screen
-        if (x > canvas.width)
-            x = 0;
-        if (y > canvas.height)
-            y = 0;
-        if (x < 0)
-            x = canvas.width;
-        if (y < 0)
-            y = canvas.height;
+        if (player.x > canvas.width - player.width)
+           player.x = canvas.width - player.width;
+        /*if (y > canvas.height)
+            y = 0;*/
+        if (player.x < 0)
+           player.x = 0;
+        /*if (y < 0)
+            y = canvas.height;*/
         }
         // Pause/Unpause
         if (lastPress == KEY_ENTER) {
             pause = !pause;
             lastPress = null;
+        }
+
+        // New shots
+        for (var i = 0, l = shots.length; i < l; i++) {
+            shots[i].y -= 10;
+            if (shots[i].y < 0) {
+                shots.splice(i --, 1);
+                l--;
+            }
         }
     }
 
