@@ -54,15 +54,12 @@
            player.x = 0;
         /*if (y < 0)
             y = canvas.height;*/
-        }
-        // Pause/Unpause
-        if (lastPress == KEY_ENTER) {
-            pause = !pause;
-            lastPress = null;
-        }
 
         // New shot
-        if (lastPress == KEY_SPACE)
+        if (lastPress == KEY_SPACE){
+            shots.push(new Rectangle(player.x+3, player.y, 5, 5));
+            lastPress = null;
+        }
 
         // Move shots
         for (var i = 0, l = shots.length; i < l; i++) {
@@ -73,7 +70,12 @@
             }
         }
     }
-
+        // Pause/Unpause
+        if (lastPress == KEY_ENTER) {
+            pause = !pause;
+            lastPress = null;
+        }
+    }    
     function paint(ctx) {
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
