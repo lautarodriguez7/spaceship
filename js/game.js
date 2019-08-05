@@ -78,8 +78,8 @@
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = '#0f0';
-        ctx.fillRect(x, y, 10, 10);
+        /*ctx.fillStyle = '#0f0';
+        ctx.fillRect(x, y, 10, 10);*/
 
         ctx.fillStyle = '#fff';
         //ctx.fillText('Last Press: '+lastPress,0,20);
@@ -88,7 +88,7 @@
         for (var i = 0, l=shots.length; i < l; i++)
             shots[i].fill(ctx);
         
-        ctx.fillStyle = '#f00';
+        ctx.fillStyle = '#fff';
         ctx.fillText ('Last Press: ' +lastPress, 0, 20);
         ctx.fillText('Shots: ' +shots.length, 0, 30); 
 
