@@ -21,7 +21,16 @@
 
     function random (max) {
         return ~~(Math.random() *max);
-    } 
+    }
+
+    function reset () {
+        score = 0;
+        player.x = 90;
+        player.y = 280;
+        shots.length = 0;
+        enemies.push(new Rectangle (10, 0,10, 10));
+        gameOver = false;
+    }
 
     function init() {
         canvas = document.getElementById('canvas');
