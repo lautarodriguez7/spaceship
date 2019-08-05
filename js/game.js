@@ -99,13 +99,22 @@
 
             // Move Enemies
             for (var i = 0, l = enemies.length; i < l; i++) {
+                if (enemies[i].timer > 0)
+                enemies[i].timer--;
+
             // Shot Intersects Enemy
             for (var j = 0, ll = shots.length; j < ll; j++) { //j for shots
                 if (shots[j].intersects(enemies[i])) {
                     score++;
+                    enemies[i].health--;
+                    if (enemies[i].health < 1) {
                     enemies[i].x = random(canvas.width / 10) * 10;
                     enemies[i].y = 0;
                     enemies.push (new Rectangle (random (canvas.width / 10) * 10, 0, 10, 10));
+                    }
+                    else {
+                        enemies[i].timer = 1;
+                    }
                     shots.splice(j--, 1);
                     ll--;
                 }
@@ -114,24 +123,41 @@
                 if (enemies[i].y > canvas.height) {
                     enemies[i].x = random (canvas.width / 10) * 10;
                     enemies[i].y = 0;
+                    enemies[i].health = 2;
             }
                 // Player Intersects Enemy
                 if (player.intersects(enemies[i]) && timer<1) {
-                    health--;
-                    timer = 20;
+                    player.health--;
+                    player.timer = 20;
                 }
                 // Shot Intersects Enemy
             for (var j = 0, ll = shots.length; j < ll; j++) { //j for shots
                 if (shots[j].intersects(enemies[i])) {
                     score++;
+                    enemies[i].health--;
+                    if (enemies[i].health < 1) {
                     enemies[i].x = random(canvas.width / 10) * 10;
                     enemies[i].y = 0;
-                    enemies.push (new Rectangle (random (canvas.width / 10) * 10, 0, 10, 10));
+                    enemies[i].health = 2;
+                    enemies.push(new Rectangle (random (canvas.width / 10)* 10, 0, 10, 10, 2));
+                    }
+                    else {
+                        enemies.[i].timer = 1;
+                    }
                     shots.splice(j--, 1);
                     ll--;
                     }
                 }   
             } 
+            // timer
+            if (player.timer > 0)
+            player.timer--;
+
+            //GameOver
+            if (player.health < 1) {
+                gameOver = true;
+                pause = true;
+            }
         }
 
            
