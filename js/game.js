@@ -12,12 +12,11 @@
         ctx = null,
         lastPress = null,
         pressing = [],
-        shots = [],
-        player = new Rectangle(90, 280, 10, 10),
+        player = new Rectangle(90, 280, 10, 10, 3),
         pause = true,
         gameOver = true,
         score = 0,
-        health = 3,
+        shots = [],
         enemies = [];
 
     function random (max) {
@@ -36,7 +35,7 @@
 
     function run() {
         setTimeout(run, 50);
-        paint(ctx);
+        act();
     }
 
     function repaint() {
@@ -48,7 +47,10 @@
         score = 0;
         player.x = 90;
         player.y = 280;
+        player.health = 3,
+        player.timer = 0,
         shots.length = 0;
+        enemies.length = 0,
         enemies.push(new Rectangle (10, 0,10, 10));
         gameOver = false;
     }
@@ -59,11 +61,6 @@
             //GameOver Reset
             if (gameOver)
                 reset();
-            //GameOver
-            if (health<1) {
-                gameOver = true;
-                pause = true;
-            }
 
             // Move rect
             //if (pressing[KEY_UP])
@@ -86,7 +83,7 @@
                 y = canvas.height;*/
 
             // New shot
-            if (lastPress == KEY_SPACE){
+            if (lastPress == KEY_SPACE) {
                 shots.push(new Rectangle(player.x+3, player.y, 5, 5));
                 lastPress = null;
             }
@@ -119,8 +116,9 @@
                     enemies[i].y = 0;
             }
                 // Player Intersects Enemy
-                if (player.intersects(enemies[i])) {
+                if (player.intersects(enemies[i]) && timer<1) {
                     health--;
+                    timer = 20;
                 }
                 // Shot Intersects Enemy
             for (var j = 0, ll = shots.length; j < ll; j++) { //j for shots
@@ -195,6 +193,8 @@
         this.y = (y == null) ?0 : y;
         this.width = (width == null) ?0 : width;
         this.height = (height == null) ?this.width : height;
+        this.health = (health == null) ?1 : health;
+        this.timer = 0;
         }
     
     Rectangle.prototype.intersects=function(rect){
