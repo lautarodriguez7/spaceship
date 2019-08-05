@@ -81,7 +81,8 @@
         /*ctx.fillStyle = '#0f0';
         ctx.fillRect(x, y, 10, 10);*/
 
-        ctx.fillStyle = '#fff';
+        ctx.fillStyle = '#0f0';
+        player.fill(ctx);
         //ctx.fillText('Last Press: '+lastPress,0,20);
 
         ctx.fillStyle = '#f00';
@@ -94,7 +95,7 @@
 
         if (pause) {
             ctx.textAlign = 'center';
-            ctx.fillText('PAUSE', 150, 75);
+            ctx.fillText('PAUSE', 100, 150);
             ctx.textAlign='left';
         }
     }
