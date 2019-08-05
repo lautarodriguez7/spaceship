@@ -106,8 +106,7 @@
     }, false)
 
     document.addEventListener('keyup', function(evt) {
-        lastPress = evt.keyCode;
-        pressing[evt.keyCode] = true;
+        pressing[evt.keyCode] = false;
     }, false)
 
     window.requestAnimationFrame = (function() {
