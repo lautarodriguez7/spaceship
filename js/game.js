@@ -86,7 +86,32 @@
                     l--;
                 }
             }
-        }   
+
+            // Move Enemies
+            for (var i = 0, l = enemies.length; i < l; i++) {
+                enemies[i].y += 10;
+                if (enemies[i].y > canvas.height) {
+                    enemies[i].x = random (canvas.width / 10) * 10;
+                    enemies[i].y = 0;
+                }
+                // Player Intersects Enemy
+                if (player.intersects(enemies[i])) {
+                    gameOver = true;
+                    pause = true;
+                }
+            }
+
+            // Shot Intersects Enemy
+            for (var j = 0, ll = shots.length; j < ll; j++){
+                if (shots[j].intersects(enemies[i])) {
+                    score++;
+                    enemies[i].x = random(canvas.width / 10) * 10;
+                    enemies[i].y = 0;
+                    enemies.push (new Rectangle (random (canvas.width / 10) * 10, 0, 10, 10));
+                    shots.splice(j--, 1);
+                    ll--;
+                }
+            }   
             // Pause/Unpause
             if (lastPress == KEY_ENTER) {
                 pause = !pause;
