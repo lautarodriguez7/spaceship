@@ -38,6 +38,10 @@
         paint(ctx);
     }
 
+    function repaint() {
+        requestAnimationFrame(repaint);
+        paint(ctx);
+    }
 
     function reset () {
         score = 0;
