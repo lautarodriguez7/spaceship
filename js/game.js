@@ -49,47 +49,51 @@
 
     function act() {
         if (!pause) {
-        // Move rect
-        //if (pressing[KEY_UP])
-        //    y -= 10;  //just moving horizontal
-        if (pressing[KEY_RIGHT])
-            player.x += 10;
-        //if (pressing[KEY_DOWN])
-        //    y += 10;  //just moving horizontal
-        if (pressing[KEY_LEFT])
-            player.x -= 10;
+            //GameOver Reset
+            if (gameOver)
+                reset();
+            // Move rect
+            //if (pressing[KEY_UP])
+            //    y -= 10;  //just moving horizontal
+            if (pressing[KEY_RIGHT])
+                player.x += 10;
+            //if (pressing[KEY_DOWN])
+            //    y += 10;  //just moving horizontal
+            if (pressing[KEY_LEFT])
+                player.x -= 10;
 
-        // Out screen
-        if (player.x > canvas.width - player.width)
-           player.x = canvas.width - player.width;
-        /*if (y > canvas.height)
-            y = 0;*/
-        if (player.x < 0)
-           player.x = 0;
-        /*if (y < 0)
-            y = canvas.height;*/
+            // Out screen
+            if (player.x > canvas.width - player.width)
+               player.x = canvas.width - player.width;
+            /*if (y > canvas.height)
+                y = 0;*/
+            if (player.x < 0)
+               player.x = 0;
+            /*if (y < 0)
+                y = canvas.height;*/
 
-        // New shot
-        if (lastPress == KEY_SPACE){
-            shots.push(new Rectangle(player.x+3, player.y, 5, 5));
-            lastPress = null;
-        }
-
-        // Move shots
-        for (var i = 0, l = shots.length; i < l; i++) {
-            shots[i].y -= 10;
-            if (shots[i].y < 0) {
-                shots.splice(i--, 1); //(i--(position), 1(number of eliminations))
-                l--;
+            // New shot
+            if (lastPress == KEY_SPACE){
+                shots.push(new Rectangle(player.x+3, player.y, 5, 5));
+                lastPress = null;
             }
-        }
-    }
-        // Pause/Unpause
-        if (lastPress == KEY_ENTER) {
-            pause = !pause;
-            lastPress = null;
-        }
-    }    
+
+            // Move shots
+            for (var i = 0, l = shots.length; i < l; i++) {
+                shots[i].y -= 10;
+                if (shots[i].y < 0) {
+                    shots.splice(i--, 1); //(i--(position), 1(number of eliminations))
+                    l--;
+                }
+            }
+        }   
+            // Pause/Unpause
+            if (lastPress == KEY_ENTER) {
+                pause = !pause;
+                lastPress = null;
+            }
+        }     
+
     function paint(ctx) {
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
