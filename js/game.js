@@ -109,6 +109,22 @@
         pressing[evt.keyCode] = false;
     }, false)
 
+    function Rectangle(x,y,width,height){
+        this.x = (x == null) ?0 : x;
+        this.y = (y == null) ?0 : y;
+        this.width = (width == null) ?0 : width;
+        this.height = (height == null) ?this.width : height;
+        }
+    
+    Rectangle.prototype.intersects=function(rect){
+        if(rect!=null){
+            return(this.x<rect.x+rect.width&&
+                this.x+this.width>rect.x&&
+                this.y<rect.y+rect.height&&
+                this.y+this.height>rect.y);
+        }
+    }
+        
     window.requestAnimationFrame = (function() {
         return window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
