@@ -154,16 +154,19 @@
             shots[i].fill(ctx);
         
         ctx.fillStyle = '#00f';
-        for (var i = 0, l = enemies; i < l; i++)
+        for (var i = 0, l = enemies.length; i < l; i++)
             enemies[i].fill(ctx);
 
         ctx.fillStyle = '#fff';
-        ctx.fillText ('Last Press: ' +lastPress, 0, 20);
-        ctx.fillText('Shots: ' +shots.length, 0, 30); 
+        //ctx.fillText ('Last Press: ' +lastPress, 0, 20);
+        //ctx.fillText('Shots: ' +shots.length, 0, 30); 
 
         if (pause) {
             ctx.textAlign = 'center';
-            ctx.fillText('PAUSE', 100, 150);
+            if (gameOver)
+                ctx.fillText('GAME OVER', 100, 150);
+            else
+                ctx.fillText('PAUSE', 100, 150);
             ctx.textAlign='left';
         }
     }
