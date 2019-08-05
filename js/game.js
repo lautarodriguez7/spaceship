@@ -59,6 +59,12 @@
             //GameOver Reset
             if (gameOver)
                 reset();
+            //GameOver
+            if (health<1) {
+                gameOver = true;
+                pause = true;
+            }
+
             // Move rect
             //if (pressing[KEY_UP])
             //    y -= 10;  //just moving horizontal
@@ -114,8 +120,7 @@
             }
                 // Player Intersects Enemy
                 if (player.intersects(enemies[i])) {
-                    gameOver = true;
-                    pause = true;
+                    health--;
                 }
                 // Shot Intersects Enemy
             for (var j = 0, ll = shots.length; j < ll; j++) { //j for shots
@@ -163,8 +168,9 @@
         //ctx.fillText('Shots: ' +shots.length, 0, 30); 
 
         //Healths
-        ctx.fillText('Health: ' +player.health, 150, 20);
-        
+        ctx.fillStyle = '#DF0101'
+        ctx.fillText('Health: ' +player.health, 150, 10);
+
         if (pause) {
             ctx.textAlign = 'center';
             if (gameOver)
