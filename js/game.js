@@ -37,11 +37,11 @@
         //if (pressing[KEY_UP])
         //    y -= 10;  //just moving horizontal
         if (pressing[KEY_RIGHT])
-            x += 10;
+            player.x += 10;
         //if (pressing[KEY_DOWN])
         //    y += 10;  //just moving horizontal
         if (pressing[KEY_LEFT])
-            x -= 10;
+            player.x -= 10;
 
         // Out screen
         if (player.x > canvas.width - player.width)
