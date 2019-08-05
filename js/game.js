@@ -109,6 +109,10 @@
         for (var i = 0, l=shots.length; i < l; i++)
             shots[i].fill(ctx);
         
+        ctx.fillStyle = '#00f';
+        for (var i = 0, l = enemies; i < l; i++)
+            enemies[i].fill(ctx);
+
         ctx.fillStyle = '#fff';
         ctx.fillText ('Last Press: ' +lastPress, 0, 20);
         ctx.fillText('Shots: ' +shots.length, 0, 30); 
