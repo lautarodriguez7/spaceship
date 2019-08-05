@@ -17,6 +17,7 @@
         pause = true,
         gameOver = true,
         score = 0,
+        health = 3,
         enemies = [];
 
     function random (max) {
@@ -161,6 +162,9 @@
         //ctx.fillText ('Last Press: ' +lastPress, 0, 20);
         //ctx.fillText('Shots: ' +shots.length, 0, 30); 
 
+        //Healths
+        ctx.fillText('Health: ' +player.health, 150, 20);
+        
         if (pause) {
             ctx.textAlign = 'center';
             if (gameOver)
