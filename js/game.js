@@ -10,8 +10,6 @@
 
     var canvas = null,
         ctx = null,
-        x = 50,
-        y = 50,
         lastPress = null,
         pressing = [],
         shots = [],
@@ -85,6 +83,14 @@
 
         ctx.fillStyle = '#fff';
         //ctx.fillText('Last Press: '+lastPress,0,20);
+
+        ctx.fillStyle = '#f00';
+        for (var i = 0, l=shots.length; i < l; i++)
+            shots[i].fill(ctx);
+        
+        ctx.fillStyle = '#f00';
+        ctx.fillText ('Last Press: ' +lastPress, 0, 20);
+        ctx.fillText('Shots: ' +shots.length, 0, 30); 
 
         if (pause) {
             ctx.textAlign = 'center';
