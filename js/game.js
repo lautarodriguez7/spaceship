@@ -14,7 +14,14 @@
         pressing = [],
         shots = [],
         player = new Rectangle(90, 280, 10, 10),
-        pause;
+        pause = true,
+        gameOver = true,
+        score = 0,
+        enemies = [];
+
+    function random (max) {
+        return ~~(Math.random() *max);
+    } 
 
     function init() {
         canvas = document.getElementById('canvas');
