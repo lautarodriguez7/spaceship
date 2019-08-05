@@ -142,7 +142,7 @@
                     enemies.push(new Rectangle (random (canvas.width / 10)* 10, 0, 10, 10, 2));
                     }
                     else {
-                        enemies.[i].timer = 1;
+                        enemies[i].timer = 1;
                     }
                     shots.splice(j--, 1);
                     ll--;
@@ -172,11 +172,19 @@
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        /*ctx.fillStyle = '#0f0';
-        ctx.fillRect(x, y, 10, 10);*/
-
         ctx.fillStyle = '#0f0';
-        player.fill(ctx);
+        if (player.timer%2 == 0)
+            player.fill(ctx);
+        for (var i = 0, l = enemies.length; i < l; i++) {
+            if (enemies[i].timer%2 == 0)
+                ctx.fillStyle = '#00f';
+            else 
+                ctx.fillStyle = '#fff';
+            enemies[i].fill(ctx);
+        }
+
+        //ctx.fillStyle = '#0f0';
+        //player.fill(ctx);
         //ctx.fillText('Last Press: '+lastPress,0,20);
 
         ctx.fillStyle = '#f00';
@@ -188,6 +196,8 @@
             enemies[i].fill(ctx);
 
         ctx.fillStyle = '#fff';
+        ctx.fillText('SCORE: ' +score, 0, 20);
+        ctx.fillText('HEALTH: ' +player.health, 150, 20);
         //ctx.fillText ('Last Press: ' +lastPress, 0, 20);
         //ctx.fillText('Shots: ' +shots.length, 0, 30); 
 
