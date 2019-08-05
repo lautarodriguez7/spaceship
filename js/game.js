@@ -124,7 +124,11 @@
                 this.y+this.height>rect.y);
         }
     }
-        
+
+    Rectangle.prototype.fill = function (ctx) {
+        ctx.fillRect (this.x, this.y, this.width, this.height);
+    }
+
     window.requestAnimationFrame = (function() {
         return window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
