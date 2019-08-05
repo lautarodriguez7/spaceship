@@ -23,15 +23,6 @@
         return ~~(Math.random() *max);
     }
 
-    function reset () {
-        score = 0;
-        player.x = 90;
-        player.y = 280;
-        shots.length = 0;
-        enemies.push(new Rectangle (10, 0,10, 10));
-        gameOver = false;
-    }
-
     function init() {
         canvas = document.getElementById('canvas');
         ctx = canvas.getContext('2d');
@@ -43,9 +34,20 @@
     }
 
     function run() {
-        requestAnimationFrame(repaint);
+        setTimeout(run, 50);
         paint(ctx);
     }
+
+
+    function reset () {
+        score = 0;
+        player.x = 90;
+        player.y = 280;
+        shots.length = 0;
+        enemies.push(new Rectangle (10, 0,10, 10));
+        gameOver = false;
+    }
+
 
     function act() {
         if (!pause) {
@@ -79,7 +81,7 @@
             }
 
             // Move shots
-            for (var i = 0, l = shots.length; i < l; i++) {
+            for (var i = 0, l = shots.length; i < l; i++) { //i for ships
                 shots[i].y -= 10;
                 if (shots[i].y < 0) {
                     shots.splice(i--, 1); //(i--(position), 1(number of eliminations))
@@ -102,7 +104,7 @@
             }
 
             // Shot Intersects Enemy
-            for (var j = 0, ll = shots.length; j < ll; j++){
+            for (var j = 0, ll = shots.length; j < ll; j++) { //j for shots
                 if (shots[j].intersects(enemies[i])) {
                     score++;
                     enemies[i].x = random(canvas.width / 10) * 10;
