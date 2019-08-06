@@ -216,7 +216,6 @@
                 pause = true;
             }
         }
-
            
             // Pause/Unpause
             if (lastPress == KEY_ENTER) {
@@ -234,28 +233,39 @@
             player.fill(ctx);
             
         for (var i = 0, l = powerUps.length; i < l; i++) {
-            if (powerUps[i].type == 1)
+            if (powerUps[i].type == 1) {
                 ctx.fillStyle = '#f90';
-            else
+                powerUps[i].drawImageArea(ctx, spritesheet, 50, 0, 10, 10);
+            }
+            else {
                 ctx.fillStyle = '#cc6';
-            powerUps[i].fill(ctx);
+                powerUps[i].drawImageArea(ctx, spritesheet, 60, 0, 10, 10);
+            }
+            //powerUps[i].fill(ctx);
         }
 
         for (var i = 0, l = enemies.length; i < l; i++) {
-            if (enemies[i].timer%2 == 0)
+            if (enemies[i].timer%2 == 0) {
                 ctx.fillStyle = '#00f';
-            else 
+                enemies[i].drawImageArea(ctx.spritesheet, 30, 0, 10, 10);
+            }   
+            else {
                 ctx.fillStyle = '#fff';
-            enemies[i].fill(ctx);
+                enemies[i].drawImageArea(ctx, spritesheet, 40, 0, 10, 10);
+            }
+            // enemies[i].fill(ctx);
         }
 
-        //ctx.fillStyle = '#0f0';
-        //player.fill(ctx);
+        ctx.drawImage(image, sX, sY, sWidth, sHeight, dX, dY, dWidth, dHeight);
+        player.drawImageArea(ctx, spritesheet, 0, 0, 10, 10);
+        // Player.fill(ctx)
+
         //ctx.fillText('Last Press: '+lastPress,0,20);
 
-        ctx.fillStyle = '#f00';
+        ctx.strokeStyle = '#f00';
         for (var i = 0, l=shots.length; i < l; i++)
-            shots[i].fill(ctx);
+            //shots[i].fill(ctx);
+            shots[i].drawImageArea(ctx, spritesheet, 70, 0, 5, 5);
         
         /*ctx.fillStyle = '#00f';
         for (var i = 0, l = enemies.length; i < l; i++)
@@ -301,7 +311,7 @@
         this.health = (health == null) ?1 : health;
         this.timer = 0;
     }
-    
+
     Rectangle.prototype.drawImageArea = (ctx, img, sx, sy, sw, sh) {
         if (img.width)
             ctx.drawImage(img, sx, sy, sw, sh, this.x, this.y, this.width, this.height);
@@ -309,7 +319,7 @@
             ctx.strokeRect(this.x, this.y, this.width, this.height);
     }
 
-    Rectangle.prototype.intersects=function(rect){
+    Rectangle.prototype.intersects = function(rect){
         if(rect!=null){
             return(this.x<rect.x+rect.width&&
                 this.x+this.width>rect.x&&
