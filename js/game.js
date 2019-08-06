@@ -79,14 +79,10 @@
                 player.x -= 10;
 
             // Out screen
-            if (player.x > canvas.width - player.width)
-               player.x = canvas.width - player.width;
-            /*if (y > canvas.height)
-                y = 0;*/
-            if (player.x < 0)
-               player.x = 0;
-            /*if (y < 0)
-                y = canvas.height;*/
+            if(player.x>canvas.width-player.width)
+                player.x=canvas.width-player.width;
+            if(player.x<0)
+                player.x=0;
 
             // New shot
             if (lastPress == KEY_SPACE) {
@@ -298,10 +294,10 @@
         this.y = (y == null) ?0 : y;
         this.width = (width == null) ?0 : width;
         this.height = (height == null) ?this.width : height;
-        this.tpye = (type == null) ?1 : type;
+        this.type = (type == null) ?1 : type;
         this.health = (health == null) ?1 : health;
         this.timer = 0;
-        }
+    }
     
     Rectangle.prototype.intersects=function(rect){
         if(rect!=null){
