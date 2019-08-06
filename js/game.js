@@ -42,7 +42,7 @@
 
     function run() {
         setTimeout(run, 50);
-        act();
+        act(0.05);
     }
 
     function repaint() {
