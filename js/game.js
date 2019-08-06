@@ -251,15 +251,16 @@
 
         ctx.fillStyle = '#0f0';
         if (player.timer%2 == 0)
-            player.fill(ctx);
-            
+            //player.fill(ctx);
+            player.drawImageArea(ctx, spritesheet, (~~(elapsedTime*10)%3)*10,0,10,10);
+
         for (var i = 0, l = powerUps.length; i < l; i++) {
             if (powerUps[i].type == 1) {
-                ctx.fillStyle = '#f90';
+                ctx.strokeStyle = '#f90';
                 powerUps[i].drawImageArea(ctx, spritesheet, 50, 0, 10, 10);
             }
             else {
-                ctx.fillStyle = '#cc6';
+                ctx.strokeStyle = '#cc6';
                 powerUps[i].drawImageArea(ctx, spritesheet, 60, 0, 10, 10);
             }
             //powerUps[i].fill(ctx);
@@ -267,26 +268,20 @@
 
         for (var i = 0, l = enemies.length; i < l; i++) {
             if (enemies[i].timer%2 == 0) {
-                ctx.fillStyle = '#00f';
+                ctx.strokeStyle = '#00f';
                 enemies[i].drawImageArea(ctx.spritesheet, 30, 0, 10, 10);
             }   
             else {
-                ctx.fillStyle = '#fff';
+                ctx.strokeStyle = '#fff';
                 enemies[i].drawImageArea(ctx, spritesheet, 40, 0, 10, 10);
             }
             // enemies[i].fill(ctx);
         }
 
-        ctx.drawImage(image, sX, sY, sWidth, sHeight, dX, dY, dWidth, dHeight);
-        player.drawImageArea(ctx, spritesheet, 0, 0, 10, 10);
-        // Player.fill(ctx)
-
-        //ctx.fillText('Last Press: '+lastPress,0,20);
-
         ctx.strokeStyle = '#f00';
         for (var i = 0, l=shots.length; i < l; i++)
             //shots[i].fill(ctx);
-            shots[i].drawImageArea(ctx, spritesheet, 70, 0, 5, 5);
+            shots[i].drawImageArea(ctx,spritesheet,70,(~~(elapsedTime*10)%2)*5,5,5);
         
         /*ctx.fillStyle = '#00f';
         for (var i = 0, l = enemies.length; i < l; i++)
@@ -332,14 +327,7 @@
         this.health = (health == null) ?1 : health;
         this.timer = 0;
     }
-
-    Rectangle.prototype.drawImageArea = (ctx, img, sx, sy, sw, sh) {
-        if (img.width)
-            ctx.drawImage(img, sx, sy, sw, sh, this.x, this.y, this.width, this.height);
-        else
-            ctx.strokeRect(this.x, this.y, this.width, this.height);
-    }
-
+    
     Rectangle.prototype.intersects = function(rect){
         if(rect!=null){
             return(this.x<rect.x+rect.width&&
@@ -352,6 +340,14 @@
     Rectangle.prototype.fill = function (ctx) {
         ctx.fillRect (this.x, this.y, this.width, this.height);
     }
+
+    Rectangle.prototype.drawImageArea = (ctx, img, sx, sy, sw, sh) {
+        if (img.width)
+            ctx.drawImage(img, sx, sy, sw, sh, this.x, this.y, this.width, this.height);
+        else
+            ctx.strokeRect(this.x, this.y, this.width, this.height);
+    }
+
 
     window.requestAnimationFrame = (function() {
         return window.requestAnimationFrame ||
