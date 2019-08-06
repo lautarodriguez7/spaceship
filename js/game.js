@@ -69,7 +69,7 @@
     }
 
 
-    function act() {
+    function act(deltaTime) {
         if (!pause) {
             //GameOver Reset
             if (gameOver)
