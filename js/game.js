@@ -38,7 +38,7 @@
         canvas.height= 300;
 
         for (i = 0; i < 200; i++)
-            stars.push( new Star (random (canvas.width), random(canvas.height)));
+            stars.push( new Star (random (canvas.width), random(canvas.height), random (100)));
         
         run();
         repaint();
@@ -246,6 +246,9 @@
                 stars[i].y++;
                 if (stars[i].y > canvas.height)
                     stars[i].y = 0;
+                stars[i].timer += 10;
+                if (stars[i].timer > 100)
+                    stars[i].timer -= 100;
             }
 
             // Pause/Unpause
