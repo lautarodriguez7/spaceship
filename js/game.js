@@ -242,6 +242,11 @@
             }
         }
             // Move Stars
+            for (i = 0, l = stars.length; i < l; i++) {
+                stars[i].y++;
+                if (stars[i].y > canvas.height)
+                    stars[i].y = 0;
+            }
 
             // Pause/Unpause
             if (lastPress == KEY_ENTER) {
