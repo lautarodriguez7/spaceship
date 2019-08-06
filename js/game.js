@@ -68,7 +68,7 @@
             if (gameOver)
                 reset();
 
-            // Move rect
+            // Move player
             //if (pressing[KEY_UP])
             //    y -= 10;  //just moving horizontal
             if (pressing[KEY_RIGHT])
@@ -112,6 +112,45 @@
                 }
             }
 
+            //Move Messages
+            for (var i = 0, l = messages.length; i < l; i++) {
+                messages[i].y += 2;
+                if (messages[i].y < 260) {
+                    messages.splice(i--, 1);
+                    l--;
+                }
+            }
+
+            // Move PowerUps
+            for (var i = 0, l = powerUps.length; i < l; i++) {
+                powerUps[i].y += 10;
+                // PowerUp Outside Screen
+                if (powerUps[i].y > canvas.height) {
+                    powerUps.splice(i--, 1);
+                    l--;
+                    continue;
+                }
+                                // Player Intersects Enemy
+                if (player.intersects(powerUps[i])) {
+                    if (powerUps[i].type == 1) { //multishot
+                        if (multiShot < 3) {
+                            multiShot++;
+                        }
+                        else {
+                            score + 5;
+                            messages.push(new messages ('MULTI', player.x, player.y));
+                        }
+                    }
+                    else { // Extre points
+                        score += 5;
+                        messages.push(new messa ('+5', player.x, player.y));
+                    }
+                    powerUps.splice(i--, 1);
+                    l--;
+                }
+            }
+            
+
             // Move Enemies
             for (var i = 0, l = enemies.length; i < l; i++) {
                 if (enemies[i].timer > 0)
@@ -140,29 +179,25 @@
                     enemies[i].y = 0;
                     enemies[i].health = 2;
             }
-                // Player Intersects Enemy
-                if (player.intersects(powerUps[i])) {
-                    if (powerUps[i].type == 1) { //multishot
-                        if (multiShot < 3) {
-                            multiShot++;
-                        }
-                        else {
-                            score + 5;
-                        }
-                    }
-                    powerUps.splice(i--, 1);
-                    l--;
-                }
+
                 // Shot Intersects Enemy
             for (var j = 0, ll = shots.length; j < ll; j++) { //j for shots
                 if (shots[j].intersects(enemies[i])) {
                     score++;
                     enemies[i].health--;
                     if (enemies[i].health < 1) {
-                    enemies[i].x = random(canvas.width / 10) * 10;
-                    enemies[i].y = 0;
-                    enemies[i].health = 2;
-                    enemies.push(new Rectangle (random (canvas.width / 10)* 10, 0, 10, 10, 2));
+                        // Add Powerup
+                        var r = random(20);
+                        if (r < 5) {
+                            if (r == 0) // New multishot
+                                powerUps.push (new Rectangle(enemies[i].x, enemies[i].y, 10, 10, 1));
+                            else    // New ExtraPoints
+                                powerUps.push(new Rectangle(enemies[i].x, enemies[i].y, 10, 10, 0));
+                        }
+                        enemies[i].x = random(canvas.width / 10) * 10;
+                        enemies[i].y = 0;
+                        enemies[i].health = 2;
+                        enemies.push(new Rectangle (random (canvas.width / 10)* 10, 0, 10, 10, 0, 2));
                     }
                     else {
                         enemies[i].timer = 1;
