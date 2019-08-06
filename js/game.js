@@ -314,6 +314,11 @@
         /*ctx.fillStyle = '#DF0101'
         ctx.fillText('Health: ' +player.health, 150, 10);*/
 
+        ctx.fillStyle = '#fff';
+        for (i = 0, l = stars; i < l; i++) {
+            ctx.fillRect(stars[i].x, stars[i].y, 1, 1);
+        }
+
         if (pause) {
             ctx.textAlign = 'center';
             if (gameOver)
