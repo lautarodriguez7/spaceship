@@ -12,13 +12,14 @@
         ctx = null,
         lastPress = null,
         pressing = [],
-        player = new Rectangle(90, 280, 10, 10, 3),
+        player = new Rectangle(90, 280, 10, 10, 0, 3),
         pause = true,
         gameOver = true,
         score = 0,
-        powerUp = [],
+        powerUps = [],
         multiShot = 1,
         shots = [],
+        messages = [],
         enemies = [];
 
     function random (max) {
@@ -86,10 +87,19 @@
 
             // New shot
             if (lastPress == KEY_SPACE) {
-                shots.push(new Rectangle(player.x+3, player.y, 5, 5));
-                lastPress = null;
+                if (multiShot == 3) {
+                shots.push(new Rectangle(player.x + 3, player.y + 2, 5, 5));
+                shots.push(new Rectangle(player.x + 3, player.y, 5, 5));
+                shots.push(new Rectangle(player.x + 9, player.y + 2, 5, 5));
             }
-
+            else if (multiShot == 2){ 
+                shots.push(new Rectangle (player.x, player.y, 5, 5));
+                shots.push(new Rectangle (player.x + 5, player.y, 5, 5));
+            } 
+            else
+                shots.push(new Rectangle (player.x + 3, player.y, 5, 5));
+            lastPress = null;
+        }
             // Move shots
             for (var i = 0, l = shots.length; i < l; i++) { //i for ships
                 shots[i].y -= 10;
@@ -128,9 +138,17 @@
                     enemies[i].health = 2;
             }
                 // Player Intersects Enemy
-                if (player.intersects(enemies[i]) && timer<1) {
-                    player.health--;
-                    player.timer = 20;
+                if (player.intersects(powerUps[i])) {
+                    if (powerUps[i].type == 1) { //multishot
+                        if (multiShot < 3) {
+                            multiShot++;
+                        }
+                        else {
+                            score + 5;
+                        }
+                    }
+                    powerUps.splice(i--, 1);
+                    l--;
                 }
                 // Shot Intersects Enemy
             for (var j = 0, ll = shots.length; j < ll; j++) { //j for shots
