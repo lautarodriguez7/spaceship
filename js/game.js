@@ -16,6 +16,8 @@
         pause = true,
         gameOver = true,
         score = 0,
+        powerUp = [],
+        multiShot = 1,
         shots = [],
         enemies = [];
 
@@ -229,6 +231,7 @@
         this.y = (y == null) ?0 : y;
         this.width = (width == null) ?0 : width;
         this.height = (height == null) ?this.width : height;
+        this.tpye = (type == null) ?1 : type;
         this.health = (health == null) ?1 : health;
         this.timer = 0;
         }
