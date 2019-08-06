@@ -21,6 +21,7 @@
         shots = [],
         messages = [],
         elapsedTime = 0,
+        stars = [],
         enemies = [];
 
         var spritesheet = new Image();
@@ -245,6 +246,11 @@
             }
         }     
 
+    function Star(x,y) {
+        this.x = (x == null) ?0 : x;
+        this.y = (y == null) ?0 : y;
+    }
+
     function paint(ctx) {
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -318,7 +324,7 @@
         pressing[evt.keyCode] = false;
     }, false)
 
-    function Rectangle(x,y,width,height){
+    function Rectangle(x,y,width,height,type,health) {
         this.x = (x == null) ?0 : x;
         this.y = (y == null) ?0 : y;
         this.width = (width == null) ?0 : width;
