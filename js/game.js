@@ -86,10 +86,10 @@
                 player.x -= 10;
 
             // Out screen
-            if(player.x>canvas.width-player.width)
-                player.x=canvas.width-player.width;
-            if(player.x<0)
-                player.x=0;
+            if(player.x > canvas.width - player.width)
+                player.x = canvas.width - player.width;
+            if(player.x < 0)
+                player.x = 0;
 
             // New shot
             if (lastPress == KEY_SPACE) {
@@ -126,27 +126,29 @@
 
             // Move PowerUps
             for (var i = 0, l = powerUps.length; i < l; i++) {
-                powerUps[i].y += 10;
+                powerUps[i].y += 5;
                 // PowerUp Outside Screen
                 if (powerUps[i].y > canvas.height) {
                     powerUps.splice(i--, 1);
                     l--;
                     continue;
                 }
-                                // Player Intersects Enemy
+
+                // Player Intersects
                 if (player.intersects(powerUps[i])) {
                     if (powerUps[i].type == 1) { //multishot
                         if (multiShot < 3) {
                             multiShot++;
+                            messages.push(new messages('MULTI', player.x, player.y));
                         }
                         else {
                             score + 5;
-                            messages.push(new messages ('MULTI', player.x, player.y));
+                            messages.push(new messages ('+5', player.x, player.y));
                         }
                     }
-                    else { // Extre points
+                    else { // Extra points
                         score += 5;
-                        messages.push(new messa ('+5', player.x, player.y));
+                        messages.push(new messages ('+5', player.x, player.y));
                     }
                     powerUps.splice(i--, 1);
                     l--;
@@ -167,7 +169,8 @@
                     if (enemies[i].health < 1) {
                     enemies[i].x = random(canvas.width / 10) * 10;
                     enemies[i].y = 0;
-                    enemies.push (new Rectangle (random (canvas.width / 10) * 10, 0, 10, 10));
+                    enemies[i].health = 2;
+                    enemies.push (new Rectangle (random (canvas.width / 10) * 10, 0, 10, 10, 0, 2));
                     }
                     else {
                         enemies[i].timer = 1;
@@ -176,12 +179,20 @@
                     ll--;
                 }
             }   
-                enemies[i].y += 10;
+
+                enemies[i].y += 5;
+                // Enemy Outside Screen
                 if (enemies[i].y > canvas.height) {
                     enemies[i].x = random (canvas.width / 10) * 10;
                     enemies[i].y = 0;
                     enemies[i].health = 2;
-            }
+                }
+
+                // Player Intersects Enemy
+                if (player.intersects(enemies[i] && player.timer < 1)) {
+                    player.health--;
+                    player.timer = 20;
+                }
 
                 // Shot Intersects Enemy
             for (var j = 0, ll = shots.length; j < ll; j++) { //j for shots
@@ -193,7 +204,7 @@
                         var r = random(20);
                         if (r < 5) {
                             if (r == 0) // New multishot
-                                powerUps.push (new Rectangle(enemies[i].x, enemies[i].y, 10, 10, 1));
+                                powerUps.push(new Rectangle(enemies[i].x, enemies[i].y, 10, 10, 1));
                             else    // New ExtraPoints
                                 powerUps.push(new Rectangle(enemies[i].x, enemies[i].y, 10, 10, 0));
                         }
@@ -209,8 +220,14 @@
                     ll--;
                     }
                 }   
-            } 
-            // timer
+            }
+            
+            // Elapsed time
+            elapsedTime += deltaTime;
+            if (elapsedTime > 3600)
+                elapsedTime -= 3600;
+
+            // timer (ex damaged)
             if (player.timer > 0)
             player.timer--;
 
