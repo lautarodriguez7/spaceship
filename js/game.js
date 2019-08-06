@@ -36,6 +36,9 @@
         ctx = canvas.getContext('2d');
         canvas.width= 200;
         canvas.height= 300;
+
+        for (i = 0; i < 200; i++)
+            stars.push( new Star (random (canvas.width), random(canvas.height)));
         
         run();
         repaint();
@@ -238,7 +241,8 @@
                 pause = true;
             }
         }
-           
+            // Move Stars
+
             // Pause/Unpause
             if (lastPress == KEY_ENTER) {
                 pause = !pause;
