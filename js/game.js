@@ -48,13 +48,16 @@
 
     function reset () {
         score = 0;
+        multiShot = 1;
         player.x = 90;
         player.y = 280;
         player.health = 3,
         player.timer = 0,
         shots.length = 0;
-        enemies.length = 0,
-        enemies.push(new Rectangle (10, 0,10, 10));
+        enemies.length = 0;
+        powerUps.length = 0;
+        messages.length = 0;
+        enemies.push(new Rectangle (10, 0,10, 10, 0, 2));
         gameOver = false;
     }
 
