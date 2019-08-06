@@ -255,12 +255,18 @@
             }
         }     
 
-    function Star(x,y) {
+    function Star(x, y, timer) {
         this.x = (x == null) ?0 : x;
         this.y = (y == null) ?0 : y;
+        this.timer = (timer == null) ?0 : timer;
     }
 
     function paint(ctx) {
+        ctx.fillStyle = 'rgb(220,214,021';
+        for (i = 0, l = stars; i < l; i++) {
+            ctx.fillRect(stars[i].x, stars[i].y, 1, 1);
+        }
+
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -313,11 +319,6 @@
         //Healths
         /*ctx.fillStyle = '#DF0101'
         ctx.fillText('Health: ' +player.health, 150, 10);*/
-
-        ctx.fillStyle = '#fff';
-        for (i = 0, l = stars; i < l; i++) {
-            ctx.fillRect(stars[i].x, stars[i].y, 1, 1);
-        }
 
         if (pause) {
             ctx.textAlign = 'center';
