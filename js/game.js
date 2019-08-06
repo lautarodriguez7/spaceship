@@ -299,6 +299,13 @@
         this.timer = 0;
     }
     
+    Rectangle.prototype.drawImageArea = (ctx, img, sx, sy, sw, sh) {
+        if (img.width)
+            ctx.drawImage(img, sx, sy, sw, sh, this.x, this.y, this.width, this.height);
+        else
+            ctx.strokeRect(this.x, this.y, this.width, this.height);
+    }
+
     Rectangle.prototype.intersects=function(rect){
         if(rect!=null){
             return(this.x<rect.x+rect.width&&
