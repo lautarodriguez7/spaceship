@@ -20,6 +20,7 @@
         multiShot = 1,
         shots = [],
         messages = [],
+        elapsedTime = 0,
         enemies = [];
 
         var spritesheet = new Image();
