@@ -128,6 +128,16 @@
                 }
             }
 
+            // Move Stars
+            for (i = 0, l = stars.length; i < l; i++) {
+                stars[i].y++;
+                if (stars[i].y > canvas.height)
+                    stars[i].y = 0;
+                stars[i].timer += 5;
+                if (stars[i].timer > 200)
+                    stars[i].timer -= 200;
+            }
+
             // Move PowerUps
             for (var i = 0, l = powerUps.length; i < l; i++) {
                 powerUps[i].y += 5;
@@ -146,7 +156,7 @@
                             messages.push(new messages('MULTI', player.x, player.y));
                         }
                         else {
-                            score + 5;
+                            score += 5;
                             messages.push(new messages ('+5', player.x, player.y));
                         }
                     }
@@ -227,9 +237,9 @@
             }
             
             // Elapsed time
-            elapsedTime += deltaTime;
-            if (elapsedTime > 3600)
-                elapsedTime -= 3600;
+            aTimer += deltaTime;
+            if (aTimer > 3600)
+                aTimer -= 3600;
 
             // timer (ex damaged)
             if (player.timer > 0)
@@ -241,15 +251,6 @@
                 pause = true;
             }
         }
-            // Move Stars
-            for (i = 0, l = stars.length; i < l; i++) {
-                stars[i].y++;
-                if (stars[i].y > canvas.height)
-                    stars[i].y = 0;
-                stars[i].timer += 10;
-                if (stars[i].timer > 100)
-                    stars[i].timer -= 100;
-            }
 
             // Pause/Unpause
             if (lastPress == KEY_ENTER) {
@@ -258,26 +259,20 @@
             }
         }     
 
-    function Star(x, y, timer) {
-        this.x = (x == null) ?0 : x;
-        this.y = (y == null) ?0 : y;
-        this.timer = (timer == null) ?0 : timer;
-    }
-
     function paint(ctx) {
-        ctx.fillStyle = 'rgb(220,214,021';
-        for (i = 0, l = stars; i < l; i++) {
-            ctx.fillRect(stars[i].x, stars[i].y, 1, 1);
-        }
-
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        for (var i = 0, l = stars.length; i < l; i++) {
+            var c = 255 -Math.abs(100-stars[i].timer);
+            ctx.fillStyle = 'rgb('+c+', '+c+', '+c+')';
+            ctx.fillRect(stars[i].x, stars[i].y, 1, 1);
+        }
 
         ctx.fillStyle = '#0f0';
         if (player.timer%2 == 0)
             //player.fill(ctx);
             player.drawImageArea(ctx, spritesheet, (~~(elapsedTime*10)%3)*10,0,10,10);
-
         for (var i = 0, l = powerUps.length; i < l; i++) {
             if (powerUps[i].type == 1) {
                 ctx.strokeStyle = '#f90';
@@ -376,6 +371,12 @@
             this.string=(string==null)?'?':string;
             this.x=(x==null)?0:x;
             this.y=(y==null)?0:y;
+        }
+
+        function Star(x, y, timer) {
+            this.x = (x == null) ?0 : x;
+            this.y = (y == null) ?0 : y;
+            this.timer = (timer == null) ?0 : timer;
         }
 
     window.requestAnimationFrame = (function() {
