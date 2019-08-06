@@ -62,6 +62,9 @@
         powerUps.length = 0;
         messages.length = 0;
         enemies.push(new Rectangle (10, 0,10, 10, 0, 2));
+        enemies.push(new Rectangle (10, 0,10, 10, 0, 2));
+        enemies.push(new Rectangle (10, 0,10, 10, 0, 2));
+        enemies.push(new Rectangle (10, 0,10, 10, 0, 2));
         gameOver = false;
     }
 
