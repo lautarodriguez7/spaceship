@@ -22,6 +22,9 @@
         messages = [],
         enemies = [];
 
+        var spritesheet = new Image();
+        spritesheet.src = 'assets/spritesheet.png';
+
     function random (max) {
         return ~~(Math.random() *max);
     }
