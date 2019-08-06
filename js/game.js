@@ -233,6 +233,15 @@
         ctx.fillStyle = '#0f0';
         if (player.timer%2 == 0)
             player.fill(ctx);
+            
+        for (var i = 0, l = powerUps.length; i < l; i++) {
+            if (powerUps[i].type == 1)
+                ctx.fillStyle = '#f90';
+            else
+                ctx.fillStyle = '#cc6';
+            powerUps[i].fill(ctx);
+        }
+
         for (var i = 0, l = enemies.length; i < l; i++) {
             if (enemies[i].timer%2 == 0)
                 ctx.fillStyle = '#00f';
@@ -249,19 +258,21 @@
         for (var i = 0, l=shots.length; i < l; i++)
             shots[i].fill(ctx);
         
-        ctx.fillStyle = '#00f';
+        /*ctx.fillStyle = '#00f';
         for (var i = 0, l = enemies.length; i < l; i++)
-            enemies[i].fill(ctx);
+            enemies[i].fill(ctx);*/
 
         ctx.fillStyle = '#fff';
+        for (var i = 0, l = messages.length; i < l; i++)
+            ctx.fillText (messages[i].string, messages[i].x, messages[i].y);
         ctx.fillText('SCORE: ' +score, 0, 20);
         ctx.fillText('HEALTH: ' +player.health, 150, 20);
         //ctx.fillText ('Last Press: ' +lastPress, 0, 20);
         //ctx.fillText('Shots: ' +shots.length, 0, 30); 
 
         //Healths
-        ctx.fillStyle = '#DF0101'
-        ctx.fillText('Health: ' +player.health, 150, 10);
+        /*ctx.fillStyle = '#DF0101'
+        ctx.fillText('Health: ' +player.health, 150, 10);*/
 
         if (pause) {
             ctx.textAlign = 'center';
