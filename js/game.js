@@ -28,7 +28,7 @@
         var spritesheet = new Image();
         var background = new Image();
         spritesheet.src = 'assets/spritesheet.png';
-        background.src = 'nebula.jpg';
+        background.src = 'assets/nebula.jpg';
 
     function random (max) {
         return ~~(Math.random() *max);
@@ -40,9 +40,6 @@
         canvas.width= 200;
         canvas.height= 300;
 
-        for (i = 0; i < 200; i++)
-            stars.push( new Star (random (canvas.width), random(canvas.height), random (100)));
-        
         run();
         repaint();
     }
@@ -68,10 +65,10 @@
         enemies.length = 0;
         powerUps.length = 0;
         messages.length = 0;
-        enemies.push(new Rectangle (10, 0,10, 10, 0, 2));
-        enemies.push(new Rectangle (10, 0,10, 10, 0, 2));
-        enemies.push(new Rectangle (10, 0,10, 10, 0, 2));
-        enemies.push(new Rectangle (10, 0,10, 10, 0, 2));
+        enemies.push(new Rectangle (30, 0,10, 10, 0, 2));
+        enemies.push(new Rectangle (70, 0,10, 10, 0, 2));
+        enemies.push(new Rectangle (110, 0,10, 10, 0, 2));
+        enemies.push(new Rectangle (150, 0,10, 10, 0, 2));
         gameOver = false;
     }
 
