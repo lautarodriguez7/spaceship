@@ -26,7 +26,11 @@
         enemies = []; 
 
         var spritesheet = new Image();
-        
+        var spritesheetP2 = new Image();
+        var spritesheetP3 = new Image();
+        var background = new Image();
+        spritesheetP2.src = 'assets/spritesheet-p2.png';
+        spritesheetP3.src = 'assets/spritesheet-p3.png';
         spritesheet.src = 'assets/spritesheet.png';
         background.src = 'assets/nebula.jpg';
 
