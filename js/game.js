@@ -267,15 +267,16 @@
             ctx.drawImage(background, 0, bgTimer);
             ctx.drawImage(background, 0, 300 + bgTimer);
         }
+        else {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
 
-        ctx.fillStyle = '#000';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        for (var i = 0, l = stars.length; i < l; i++) {
+        /*for (var i = 0, l = stars.length; i < l; i++) {
             var c = 255 -Math.abs(100-stars[i].timer);
             ctx.fillStyle = 'rgb('+c+', '+c+', '+c+')';
             ctx.fillRect(stars[i].x, stars[i].y, 1, 1);
-        }
+        }*/
 
         ctx.fillStyle = '#0f0';
         if (player.timer%2 == 0)
@@ -309,10 +310,6 @@
         for (var i = 0, l=shots.length; i < l; i++)
             //shots[i].fill(ctx);
             shots[i].drawImageArea(ctx,spritesheet,70,(~~(elapsedTime*10)%2)*5,5,5);
-        
-        /*ctx.fillStyle = '#00f';
-        for (var i = 0, l = enemies.length; i < l; i++)
-            enemies[i].fill(ctx);*/
 
         ctx.fillStyle = '#fff';
         for (var i = 0, l = messages.length; i < l; i++)
