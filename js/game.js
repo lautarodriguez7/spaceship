@@ -9,21 +9,13 @@
         KEY_DOWN = 40;
 
     var canvas = null, 
-        ctx = null,
-        lastPress = null,
-        pressing = [],
+        ctx = null, 
         player = new Rectangle(90, 280, 10, 10, 0, 3), 
-        pause = true,
-        gameOver = true,
-        score = 0,
-        powerUps = [], 
-        multiShot = 1, 
+        pause, 
         shots = [], 
-        messages = [], 
-        aTimer = 0,
-        bgTimer = 0,
-        eTimer = 0,
-        enemies = []; 
+        aTimer = 0, /
+        eTimer = 0, /
+        enemies = []; / 
 
         var spritesheet = new Image();
         var spritesheetP2 = new Image();
