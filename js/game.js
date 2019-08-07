@@ -265,7 +265,22 @@
                         l--;
                     }
                 }
-                
+                // Enemy Shot
+                else if(enemies[i].type == 2) {
+                    enemies[i].y += 10;
+                    // EnemyShot Outside Screen
+                    if (enemies[i].y > canvas.height) {
+                        enemies.splice(i--, 1);
+                        l--;
+                        continue;
+                    }
+
+                    // Player Intersects EnemyShot
+                    if (player.intersects(enemies[i] && player.timer < 1)) {
+                        player.health --;
+                        player.timer = 20;
+                    }
+                }
             }
             
             // Elapsed time
