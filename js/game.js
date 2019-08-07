@@ -182,26 +182,17 @@
         }
     }
 
-    document.addEventListener('keydown', function(evt) {
-        lastPress = evt.keyCode;
-        pressing[evt.keyCode] = true;
-    }, false)
-
-    document.addEventListener('keyup', function(evt) {
-        pressing[evt.keyCode] = false;
-    }, false)
-
-    function Rectangle(x, y, width, height, type, health) {
-        this.x = (x == null) ?0 : x;
-        this.y = (y == null) ?0 : y;
-        this.vx = (vx == null) ?0 : vx;
-        this.vy = (vy == null) ?0 : vy;
-        this.width = (width == null) ?0 : width;
-        this.height = (height == null) ?this.width : height;
-        this.type = (type == null) ?1 : type;
-        this.health = (health == null) ?1 : health;
-        this.timer = 0;
-    }
+    function Rectangle(x,y,width,height,type,health,vx,vy){
+        this.x=(x==null)?0:x;
+        this.y=(y==null)?0:y;
+        this.vx=(vx==null)?0:vx;
+        this.vy=(vy==null)?0:vy;
+        this.width=(width==null)?0:width;
+        this.height=(height==null)?this.width:height;
+        this.type=(type==null)?1:type;
+        this.health=(health==null)?1:health;
+        this.timer=0;
+        }
     
     Rectangle.prototype.intersects = function(rect){
         if(rect!=null){
@@ -222,12 +213,6 @@
         else
             ctx.strokeRect(this.x,this.y,this.width,this.height);
     }
-
-        function Message(string,x,y) {
-            this.string=(string == null)?'?' : string;
-            this.x=(x == null)?0 : x;
-            this.y=(y == null)?0 : y;
-        }
 
     window.requestAnimationFrame = (function() {
         return window.requestAnimationFrame ||
