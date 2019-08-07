@@ -98,7 +98,7 @@
             // New shot
             if (lastPress == KEY_SPACE) {
                 if (multiShot == 3) {
-                shots.push(new Rectangle(player.x + 3, player.y + 2, 5, 5));
+                shots.push(new Rectangle(player.x - 3, player.y + 2, 5, 5));
                 shots.push(new Rectangle(player.x + 3, player.y, 5, 5));
                 shots.push(new Rectangle(player.x + 9, player.y + 2, 5, 5));
             }
@@ -129,14 +129,14 @@
             }
 
             // Move Stars
-            for (i = 0, l = stars.length; i < l; i++) {
+           /* for (i = 0, l = stars.length; i < l; i++) {
                 stars[i].y++;
                 if (stars[i].y > canvas.height)
                     stars[i].y = 0;
                 stars[i].timer += 5;
                 if (stars[i].timer > 200)
                     stars[i].timer -= 200;
-            }
+            } */
 
             // Move PowerUps
             for (var i = 0, l = powerUps.length; i < l; i++) {
@@ -240,6 +240,9 @@
             aTimer += deltaTime;
             if (aTimer > 3600)
                 aTimer -= 3600;
+            bgTimer++;
+            if (bgTimer < 0)
+                bgTimer -= 300;
 
             // timer (ex damaged)
             if (player.timer > 0)
@@ -260,6 +263,11 @@
         }     
 
     function paint(ctx) {
+        if (background.width) {
+            ctx.drawImage(background, 0, bgTimer);
+            ctx.drawImage(background, 0, 300 + bgTimer);
+        }
+
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -313,11 +321,6 @@
         ctx.fillText('HEALTH: ' +player.health, 150, 20);
         //ctx.fillText ('Last Press: ' +lastPress, 0, 20);
         //ctx.fillText('Shots: ' +shots.length, 0, 30); 
-
-        if (background.width) {
-            ctx.drawImage(background, 0, bgTimer);
-            ctx.drawImage(background, 0, background.height + bgTimer);
-        }
 
         //Healths
         /*ctx.fillStyle = '#DF0101'
