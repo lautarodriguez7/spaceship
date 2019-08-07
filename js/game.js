@@ -280,7 +280,7 @@
         ctx.fillStyle = '#0f0';
         if (player.timer%2 == 0)
             //player.fill(ctx);
-            player.drawImageArea(ctx, spritesheet, (~~(elapsedTime*10)%3)*10,0,10,10);
+            player.drawImageArea(ctx, spritesheet, (~~(aTimer*10)%3)*10,0,10,10);
         for (var i = 0, l = powerUps.length; i < l; i++) {
             if (powerUps[i].type == 1) {
                 ctx.strokeStyle = '#f90';
@@ -308,7 +308,7 @@
         ctx.strokeStyle = '#f00';
         for (var i = 0, l=shots.length; i < l; i++)
             //shots[i].fill(ctx);
-            shots[i].drawImageArea(ctx,spritesheet,70,(~~(elapsedTime*10)%2)*5,5,5);
+            shots[i].drawImageArea(ctx,spritesheet,70,(~~(aTimer*10)%2)*5,5,5);
 
         ctx.fillStyle = '#fff';
         for (var i = 0, l = messages.length; i < l; i++)
@@ -369,7 +369,7 @@
             ctx.drawImage(img,sx,sy,sw,sh,this.x,this.y,this.width,this.height);
         else
             ctx.strokeRect(this.x,this.y,this.width,this.height);
-        }
+    }
 
         function Message(string,x,y) {
             this.string=(string == null)?'?' : string;
