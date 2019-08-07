@@ -21,12 +21,14 @@
         shots = [],
         messages = [],
         elapsedTime = 0,
-        bigTimer = 0;
+        bgTimer = 0;
         stars = [],
         enemies = [];
 
         var spritesheet = new Image();
+        var background = new Image();
         spritesheet.src = 'assets/spritesheet.png';
+        background.src = 'nebula.jpg';
 
     function random (max) {
         return ~~(Math.random() *max);
@@ -314,6 +316,11 @@
         ctx.fillText('HEALTH: ' +player.health, 150, 20);
         //ctx.fillText ('Last Press: ' +lastPress, 0, 20);
         //ctx.fillText('Shots: ' +shots.length, 0, 30); 
+
+        if (background.width) {
+            ctx.drawImage(background, 0, bgTimer);
+            ctx.drawImage(background, 0, background.height + bgTimer);
+        }
 
         //Healths
         /*ctx.fillStyle = '#DF0101'
