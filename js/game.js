@@ -236,6 +236,36 @@
                 }   
 
                 //Generate Enemy
+                eTimer--;
+                if (eTimer < 0) {
+                    enemies.push(new Rectangle(0, 40, 10, 10, 1));
+                    eTimer = 20 + random(40);
+                }
+                if (enemies[i].type == 1) {
+                    enemies[i].x += 5;
+                    //Shooter Outside Screen
+                    if (enemies[i].x > canvas.width) {
+                        enemies.splice(i--, 1);
+                        l--;
+                        continue;
+                    }
+                    // Shooter Shots
+                    enemies[i].timer--;
+                    if (enemies[i]. timer < 0) {
+                        enemies.push (new Rectangle(enemies[i].y + 5, 5, 5, 2));
+                        enemies[i].timer = 10 + random(30);
+                    }
+                    // Shot Intersects Shooter
+                    for (var j = 0, ll = shots.length; j < ll; j++);
+                    if (shots[j].intersects(enemies[i])) {
+                        score++;
+                        shots.splice(j--, 1);
+                        ll--;
+                        enemies.splice(i--, 1);
+                        l--;
+                    }
+                }
+                
             }
             
             // Elapsed time
