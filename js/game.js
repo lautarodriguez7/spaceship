@@ -242,8 +242,8 @@
                 //Generate Enemy
                 eTimer--;
                 if (eTimer < 0) {
-                    enemies.push(new Rectangle(0, 40, 10, 10, 1));
-                    eTimer = 20 + random(40);
+                    enemies.push(new Rectangle(random(15) *10, 0, 10, 10, 3));
+                    eTimer = 40 + random(40);
                 }
                 if (enemies[i].type == 1) {
                     enemies[i].x += 5;
@@ -271,9 +271,10 @@
                 }
                 // Enemy Shot
                 else if(enemies[i].type == 2) {
-                    enemies[i].y += 10;
+                    enemies[i].x += enemies[i].vx;
+                    enemies[i].y += enemies[i].vy;
                     // EnemyShot Outside Screen
-                    if (enemies[i].y > canvas.height) {
+                    if (enemies[i].x<0||enemies[i].x>canvas.width||enemies[i].y<0||enemies[i].y>canvas.height) {
                         enemies.splice(i--, 1);
                         l--;
                         continue;
@@ -284,6 +285,30 @@
                         player.health --;
                         player.timer = 20;
                     }
+                }
+                // 8Shooter
+                if (enemies[i].type == 3) {
+                    enemies[i].y += 5;
+                    // 8Shooter Outside Screen
+                    if (enemies[i].y > canvas.height) {
+                        enemies.splice(i--, 1);
+                        l--;
+                        continue;
+                    }
+                    // 8Shooter Shots
+                    enemies[i].timer--;
+                    if (enemies[i].timer < 0) {
+                        enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, 0, 10));
+                        enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, -7, 7));
+                        enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, -10, 0));
+                        enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, -7, -7));
+                        enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, 0, -10));
+                        enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, 7, -7));
+                        enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, 10, 0));
+                        enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, 7, 7));
+                        enemies[i].timer = 30 + random(30);
+                    }
+                    
                 }
             }
             
