@@ -22,6 +22,7 @@
         messages = [], 
         aTimer = 0,
         bgTimer = 0,
+        eTimer = 0,
         enemies = []; 
 
         var spritesheet = new Image();
@@ -233,6 +234,8 @@
                     ll--;
                     }
                 }   
+
+                //Generate Enemy
             }
             
             // Elapsed time
