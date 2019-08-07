@@ -21,6 +21,7 @@
         shots = [],
         messages = [],
         elapsedTime = 0,
+        bigTimer = 0;
         stars = [],
         enemies = [];
 
