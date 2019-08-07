@@ -398,9 +398,11 @@
         pressing[evt.keyCode] = false;
     }, false)
 
-    function Rectangle(x,y,width,height,type,health) {
+    function Rectangle(x, y, width, height, type, health) {
         this.x = (x == null) ?0 : x;
         this.y = (y == null) ?0 : y;
+        this.vx = (vx == null) ?0 : vx;
+        this.vy = (vy == null) ?0 : vy;
         this.width = (width == null) ?0 : width;
         this.height = (height == null) ?this.width : height;
         this.type = (type == null) ?1 : type;
