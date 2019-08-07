@@ -147,7 +147,7 @@
                 }
             }
         }
-        
+
         // Elapsed time
         aTimer += deltaTime;
         if (aTimer > 3600)
@@ -156,77 +156,28 @@
     }
         
     function paint(ctx) {
-        if (background.width) {
-            ctx.drawImage(background, 0, bgTimer);
-            ctx.drawImage(background, 0, 300 + bgTimer);
-        }
-        else {
-            ctx.fillStyle = '#000';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-
-        /*for (var i = 0, l = stars.length; i < l; i++) {
-            var c = 255 -Math.abs(100-stars[i].timer);
-            ctx.fillStyle = 'rgb('+c+', '+c+', '+c+')';
-            ctx.fillRect(stars[i].x, stars[i].y, 1, 1);
-        }*/
-
-        ctx.fillStyle = '#0f0';
-        if (player.timer%2 == 0)
-            //player.fill(ctx);
-            player.drawImageArea(ctx, spritesheet, (~~(aTimer*10)%3)*10,0,10,10);
-        for (var i = 0, l = powerUps.length; i < l; i++) {
-            if (powerUps[i].type == 1) {
-                ctx.strokeStyle = '#f90';
-                powerUps[i].drawImageArea(ctx, spritesheet, 50, 0, 10, 10);
-            }
-            else {
-                ctx.strokeStyle = '#cc6';
-                powerUps[i].drawImageArea(ctx, spritesheet, 60, 0, 10, 10);
-            }
-            //powerUps[i].fill(ctx);
-        }
-
+    
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+        ctx.strokeStyle = '#00f';
         for (var i = 0, l = enemies.length; i < l; i++) {
-            ctx.strokeStyle = '#00f';
-            if (enemies[i].type == 0) {
-                if (enemies[i].timer%2 == 0) 
-                    enemies[i].drawImageArea(ctx.spritesheet, 30, 0, 10, 10);
-                
-                else {
-                    ctx.strokeStyle = '#fff';
-                    enemies[i].drawImageArea(ctx, spritesheet, 40, 0, 10, 10);
-                }
+            if (enemies[i].type == 2)
+                enemies[i].drawImageArea(ctx,spritesheet,75,(~~(aTimer*10)%2)*5,5,5);
+            else if(enemies[i].type==3){
+                if(enemies[i].timer==1)
+                    enemies[i].drawImageArea(ctx,spritesheet,120,0,10,10);
+                else
+                    enemies[i].drawImageArea(ctx,spritesheet,100+(~~(aTimer*10)%2)*10,0,10,10);
             }
-            else if (enemies[i].type == 1)
-                enemies[i].drawImageArea(ctx, spritesheet, 80 + (aTimer%2)* 10, 0, 10, 10);
-            else if (enemies[i].type == 2)
-                enemies[i].drawImageArea(ctx, spritesheet, 75, (aTimer%2)*5, 5, 5);
         }
-
-        ctx.strokeStyle = '#f00';
-        for (var i = 0, l=shots.length; i < l; i++)
-            //shots[i].fill(ctx);
-            shots[i].drawImageArea(ctx,spritesheet,70,(~~(aTimer*10)%2)*5,5,5);
-
+        
         ctx.fillStyle = '#fff';
-        for (var i = 0, l = messages.length; i < l; i++)
-            ctx.fillText (messages[i].string, messages[i].x, messages[i].y);
-        ctx.fillText('SCORE: ' +score, 0, 20);
-        ctx.fillText('HEALTH: ' +player.health, 150, 20);
-        //ctx.fillText ('Last Press: ' +lastPress, 0, 20);
-        //ctx.fillText('Shots: ' +shots.length, 0, 30); 
-
-        //Healths
-        /*ctx.fillStyle = '#DF0101'
-        ctx.fillText('Health: ' +player.health, 150, 10);*/
-
+        ctx.fillText('SCORE: ', 0, 20);
+        ctx.fillText('HEALTH: ?', 150, 20);
         if (pause) {
             ctx.textAlign = 'center';
-            if (gameOver)
-                ctx.fillText('GAME OVER', 100, 150);
-            else
-                ctx.fillText('PAUSE', 100, 150);
+            ctx.fillText('PAUSE', 100, 150);
             ctx.textAlign='left';
         }
     }
@@ -277,12 +228,6 @@
             this.x=(x == null)?0 : x;
             this.y=(y == null)?0 : y;
         }
-
-        /*function Star(x, y, timer) {
-            this.x = (x == null) ?0 : x;
-            this.y = (y == null) ?0 : y;
-            this.timer = (timer == null) ?0 : timer;
-        }*/
 
     window.requestAnimationFrame = (function() {
         return window.requestAnimationFrame ||
