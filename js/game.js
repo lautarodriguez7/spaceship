@@ -342,15 +342,20 @@
         }
 
         for (var i = 0, l = enemies.length; i < l; i++) {
-            if (enemies[i].timer%2 == 0) {
-                ctx.strokeStyle = '#00f';
-                enemies[i].drawImageArea(ctx.spritesheet, 30, 0, 10, 10);
-            }   
-            else {
-                ctx.strokeStyle = '#fff';
-                enemies[i].drawImageArea(ctx, spritesheet, 40, 0, 10, 10);
+            ctx.strokeStyle = '#00f';
+            if (enemies[i].type == 0) {
+                if (enemies[i].timer%2 == 0) 
+                    enemies[i].drawImageArea(ctx.spritesheet, 30, 0, 10, 10);
+                
+                else {
+                    ctx.strokeStyle = '#fff';
+                    enemies[i].drawImageArea(ctx, spritesheet, 40, 0, 10, 10);
+                }
             }
-            // enemies[i].fill(ctx);
+            else if (enemies[i].type == 1)
+                enemies[i].drawImageArea(ctx, spritesheet, 80 + (aTimer%2)* 10, 0, 10, 10);
+            else if (enemies[i].type == 2)
+                enemies[i].drawImageArea(ctx, spritesheet, 75, (aTimer%2)*5, 5, 5);
         }
 
         ctx.strokeStyle = '#f00';
