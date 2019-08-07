@@ -308,7 +308,28 @@
                         enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, 7, 7));
                         enemies[i].timer = 30 + random(30);
                     }
-                    
+                    // Player Intersects 8Shooter
+                    if (player.intersects(enemies[i] && player.timer < 1)) {
+                        if (shots[j].intersects(enemies[i])) {
+                            score++;
+                            enemies[i].health --;
+                            if (enemies[i].health < 1) {
+                                enemies.splice(l--, 1);
+                                l--;
+                            }
+                        }
+                        else if (enemies[i].type == 3) {
+                            if (enemies[i].timer == 1) 
+                                enemies[i].drawImageArea(ctx, spritesheet, 120, 0, 10, 10);
+                            else
+                            enemies[i].drawImageArea(ctx, spritesheet, 100 + (aTimer%2) *10, 0, 10, 10);
+                        }
+                        if (multiShot == 3) {
+                            shots.push (new Rectangle (player.x - 3, player.y + 2,5, 5, 0, 0, -3, -10));
+                            shots.push (new Rectangle (player.x - 3, player.y, 5, 5, 0, 0, -10));
+                            shots.push (new Rectangle (player.x - 3, player.y + 2, 5, 5, 0, 0, 3, -10));
+                        }
+                    }
                 }
             }
             
