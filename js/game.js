@@ -354,10 +354,10 @@
     
     Rectangle.prototype.intersects = function(rect){
         if(rect!=null){
-            return(this.x<rect.x+rect.width&&
-                this.x+this.width>rect.x&&
-                this.y<rect.y+rect.height&&
-                this.y+this.height>rect.y);
+            return(this.x < rect.x + rect.width &&
+                this.x + this.width > rect.x &&
+                this.y < rect.y + rect.height &&
+                this.y + this.height > rect.y);
         }
     }
 
@@ -365,24 +365,24 @@
         ctx.fillRect (this.x, this.y, this.width, this.height);
     }
 
-    Rectangle.prototype.drawImageArea=function(ctx,img,sx,sy,sw,sh){
+    Rectangle.prototype.drawImageArea = function(ctx,img,sx,sy,sw,sh){
         if(img.width)
             ctx.drawImage(img,sx,sy,sw,sh,this.x,this.y,this.width,this.height);
         else
             ctx.strokeRect(this.x,this.y,this.width,this.height);
         }
 
-        function Message(string,x,y){
-            this.string=(string==null)?'?':string;
-            this.x=(x==null)?0:x;
-            this.y=(y==null)?0:y;
+        function Message(string,x,y) {
+            this.string=(string == null)?'?' : string;
+            this.x=(x == null)?0 : x;
+            this.y=(y == null)?0 : y;
         }
 
-        function Star(x, y, timer) {
+        /*function Star(x, y, timer) {
             this.x = (x == null) ?0 : x;
             this.y = (y == null) ?0 : y;
             this.timer = (timer == null) ?0 : timer;
-        }
+        }*/
 
     window.requestAnimationFrame = (function() {
         return window.requestAnimationFrame ||
