@@ -13,9 +13,9 @@
         player = new Rectangle(90, 280, 10, 10, 0, 3), 
         pause, 
         shots = [], 
-        aTimer = 0, /
-        eTimer = 0, /
-        enemies = []; / 
+        aTimer = 0, 
+        eTimer = 0, 
+        enemies = []; 
 
         var spritesheet = new Image();
         var spritesheetP2 = new Image();
@@ -50,7 +50,7 @@
         paint(ctx);
     }
 
-    function reset () {
+    /*function reset () {
         score = 0;
         multiShot = 1;
         player.x = 90;
@@ -66,291 +66,95 @@
         enemies.push(new Rectangle (110, 0,10, 10, 0, 2));
         enemies.push(new Rectangle (150, 0,10, 10, 0, 2));
         gameOver = false;
-    }
+    }*/
 
 
     function act(deltaTime) {
         if (!pause) {
-            //GameOver Reset
-            if (gameOver)
-                reset();
-
-            // Move player
-            //if (pressing[KEY_UP])
-            //    y -= 10;  //just moving horizontal
-            if (pressing[KEY_RIGHT])
-                player.x += 10;
-            //if (pressing[KEY_DOWN])
-            //    y += 10;  //just moving horizontal
-            if (pressing[KEY_LEFT])
-                player.x -= 10;
-
-            // Out screen
-            if(player.x > canvas.width - player.width)
-                player.x = canvas.width - player.width;
-            if(player.x < 0)
-                player.x = 0;
-
-            // New shot
-            if (lastPress == KEY_SPACE) {
-                if (multiShot == 3) {
-                shots.push(new Rectangle(player.x - 3, player.y + 2, 5, 5));
-                shots.push(new Rectangle(player.x + 3, player.y, 5, 5));
-                shots.push(new Rectangle(player.x + 9, player.y + 2, 5, 5));
+            //Generate Enemy
+            eTimer--;
+            if (eTimer < 0) {
+                enemies.push(new Rectangle(random(15) *10, 0, 10, 10, 3));
+                eTimer = 40 + random(40);
             }
-            else if (multiShot == 2){ 
-                shots.push(new Rectangle (player.x, player.y, 5, 5));
-                shots.push(new Rectangle (player.x + 5, player.y, 5, 5));
-            } 
-            else
-                shots.push(new Rectangle (player.x + 3, player.y, 5, 5));
-            lastPress = null;
-        }
-            // Move shots
-            for (var i = 0, l = shots.length; i < l; i++) { //i for ships
-                shots[i].y -= 10;
-                if (shots[i].y < 0) {
-                    shots.splice(i--, 1); //(i--(position), 1(number of eliminations))
+
+            // Move Enemies
+            for (var i = 0, l = enemies.length; i < l; i++) {
+               if (enemies[i].timer > 0)
+               enemies[i].timer--;
+
+            // Enemy Shot
+            else if(enemies[i].type == 2) {
+                enemies[i].x += enemies[i].vx;
+                enemies[i].y += enemies[i].vy;
+                // EnemyShot Outside Screen
+                if (enemies[i].x<0||enemies[i].x>canvas.width||enemies[i].y<0||enemies[i].y>canvas.height) {
+                    enemies.splice(i--, 1);
                     l--;
+                    continue;
+                }
+                 // Player Intersects EnemyShot
+                 if (player.intersects(enemies[i] && player.timer < 1)) {
+                    player.health--;
+                    player.timer = 20;
                 }
             }
-
-            //Move Messages
-            for (var i = 0, l = messages.length; i < l; i++) {
-                messages[i].y += 2;
-                if (messages[i].y < 260) {
-                    messages.splice(i--, 1);
-                    l--;
-                }
-            }
-
-            // Move Stars
-           /* for (i = 0, l = stars.length; i < l; i++) {
-                stars[i].y++;
-                if (stars[i].y > canvas.height)
-                    stars[i].y = 0;
-                stars[i].timer += 5;
-                if (stars[i].timer > 200)
-                    stars[i].timer -= 200;
-            } */
-
-            // Move PowerUps
-            for (var i = 0, l = powerUps.length; i < l; i++) {
-                powerUps[i].y += 5;
-                // PowerUp Outside Screen
-                if (powerUps[i].y > canvas.height) {
-                    powerUps.splice(i--, 1);
+            // 8Shooter
+            if (enemies[i].type == 3) {
+                enemies[i].y += 5;
+                // 8Shooter Outside Screen
+                if (enemies[i].y > canvas.height) {
+                    enemies.splice(i--, 1);
                     l--;
                     continue;
                 }
 
-                // Player Intersects
-                if (player.intersects(powerUps[i])) {
-                    if (powerUps[i].type == 1) { //multishot
-                        if (multiShot < 3) {
-                            multiShot++;
-                            messages.push(new messages('MULTI', player.x, player.y));
-                        }
-                        else {
-                            score += 5;
-                            messages.push(new messages ('+5', player.x, player.y));
-                        }
-                    }
-                    else { // Extra points
-                        score += 5;
-                        messages.push(new messages ('+5', player.x, player.y));
-                    }
-                    powerUps.splice(i--, 1);
-                    l--;
-                }
-            }
-            
-
-            // Move Enemies
-            for (var i = 0, l = enemies.length; i < l; i++) {
-                if (enemies[i].timer > 0)
+                // 8Shooter Shots
                 enemies[i].timer--;
-
-            // Shot Intersects Enemy
-            for (var j = 0, ll = shots.length; j < ll; j++) { //j for shots
-                if (shots[j].intersects(enemies[i])) {
-                    score++;
-                    enemies[i].health--;
-                    if (enemies[i].health < 1) {
-                    enemies[i].x = random(canvas.width / 10) * 10;
-                    enemies[i].y = 0;
-                    enemies[i].health = 2;
-                    enemies.push (new Rectangle (random (canvas.width / 10) * 10, 0, 10, 10, 0, 2));
-                    }
-                    else {
-                        enemies[i].timer = 1;
-                    }
-                    shots.splice(j--, 1);
-                    ll--;
+                if (enemies[i].timer < 0) {
+                    enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, 0, 10));
+                    enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, -7, 7));
+                    enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, -10, 0));
+                    enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, -7, -7));
+                    enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, 0, -10));
+                    enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, 7, -7));
+                    enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, 10, 0));
+                    enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, 7, 7));
+                    enemies[i].timer = 30 + random(30);
                 }
-            }   
-
-                enemies[i].y += 5;
-                // Enemy Outside Screen
-                if (enemies[i].y > canvas.height) {
-                    enemies[i].x = random (canvas.width / 10) * 10;
-                    enemies[i].y = 0;
-                    enemies[i].health = 2;
-                }
-
-                // Player Intersects Enemy
-                if (player.intersects(enemies[i] && player.timer < 1)) {
+                 // Player Intersects 8Shooter
+                 if (player.intersects(enemies[i] && player.timer < 1)) {
                     player.health--;
                     player.timer = 20;
                 }
 
-                // Shot Intersects Enemy
-            for (var j = 0, ll = shots.length; j < ll; j++) { //j for shots
-                if (shots[j].intersects(enemies[i])) {
-                    score++;
-                    enemies[i].health--;
-                    if (enemies[i].health < 1) {
-                        // Add Powerup
-                        var r = random(20);
-                        if (r < 5) {
-                            if (r == 0) // New multishot
-                                powerUps.push(new Rectangle(enemies[i].x, enemies[i].y, 10, 10, 1));
-                            else    // New ExtraPoints
-                                powerUps.push(new Rectangle(enemies[i].x, enemies[i].y, 10, 10, 0));
-                        }
-                        enemies[i].x = random(canvas.width / 10) * 10;
-                        enemies[i].y = 0;
-                        enemies[i].health = 2;
-                        enemies.push(new Rectangle (random (canvas.width / 10)* 10, 0, 10, 10, 0, 2));
-                    }
-                    else {
-                        enemies[i].timer = 1;
-                    }
-                    shots.splice(j--, 1);
-                    ll--;
-                    }
-                }   
-
-                //Generate Enemy
-                eTimer--;
-                if (eTimer < 0) {
-                    enemies.push(new Rectangle(random(15) *10, 0, 10, 10, 3));
-                    eTimer = 40 + random(40);
-                }
-                if (enemies[i].type == 1) {
-                    enemies[i].x += 5;
-                    //Shooter Outside Screen
-                    if (enemies[i].x > canvas.width) {
-                        enemies.splice(i--, 1);
-                        l--;
-                        continue;
-                    }
-                    // Shooter Shots
-                    enemies[i].timer--;
-                    if (enemies[i]. timer < 0) {
-                        enemies.push (new Rectangle(enemies[i].y + 5, 5, 5, 2));
-                        enemies[i].timer = 10 + random(30);
-                    }
-                    // Shot Intersects Shooter
-                    for (var j = 0, ll = shots.length; j < ll; j++);
+                // Shot Intersects 8Shooter
+                for (var j = 0, ll = shots.length; j < ll; j++) {
                     if (shots[j].intersects(enemies[i])) {
                         score++;
+                        enemies[i].health --;
+                        if (enemies[i].health < 1) {
+                            enemies.splice(l--, 1);
+                            l--;
+                        }
+                        else 
+                            enemies[i].timer = 1;
                         shots.splice(j--, 1);
-                        ll--;
-                        enemies.splice(i--, 1);
                         l--;
+                    
+                    
                     }
                 }
-                // Enemy Shot
-                else if(enemies[i].type == 2) {
-                    enemies[i].x += enemies[i].vx;
-                    enemies[i].y += enemies[i].vy;
-                    // EnemyShot Outside Screen
-                    if (enemies[i].x<0||enemies[i].x>canvas.width||enemies[i].y<0||enemies[i].y>canvas.height) {
-                        enemies.splice(i--, 1);
-                        l--;
-                        continue;
-                    }
-
-                    // Player Intersects EnemyShot
-                    if (player.intersects(enemies[i] && player.timer < 1)) {
-                        player.health --;
-                        player.timer = 20;
-                    }
-                }
-                // 8Shooter
-                if (enemies[i].type == 3) {
-                    enemies[i].y += 5;
-                    // 8Shooter Outside Screen
-                    if (enemies[i].y > canvas.height) {
-                        enemies.splice(i--, 1);
-                        l--;
-                        continue;
-                    }
-                    // 8Shooter Shots
-                    enemies[i].timer--;
-                    if (enemies[i].timer < 0) {
-                        enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, 0, 10));
-                        enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, -7, 7));
-                        enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, -10, 0));
-                        enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, -7, -7));
-                        enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, 0, -10));
-                        enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, 7, -7));
-                        enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, 10, 0));
-                        enemies.push(new Rectangle (enemies[i].x + 3, enemies[i].y + 5, 5, 5, 2, 0, 7, 7));
-                        enemies[i].timer = 30 + random(30);
-                    }
-                    // Player Intersects 8Shooter
-                    if (player.intersects(enemies[i] && player.timer < 1)) {
-                        if (shots[j].intersects(enemies[i])) {
-                            score++;
-                            enemies[i].health --;
-                            if (enemies[i].health < 1) {
-                                enemies.splice(l--, 1);
-                                l--;
-                            }
-                        }
-                        else if (enemies[i].type == 3) {
-                            if (enemies[i].timer == 1) 
-                                enemies[i].drawImageArea(ctx, spritesheet, 120, 0, 10, 10);
-                            else
-                            enemies[i].drawImageArea(ctx, spritesheet, 100 + (aTimer%2) *10, 0, 10, 10);
-                        }
-                        if (multiShot == 3) {
-                            shots.push (new Rectangle (player.x - 3, player.y + 2,5, 5, 0, 0, -3, -10));
-                            shots.push (new Rectangle (player.x - 3, player.y, 5, 5, 0, 0, -10));
-                            shots.push (new Rectangle (player.x - 3, player.y + 2, 5, 5, 0, 0, 3, -10));
-                        }
-                    }
-                }
-            }
-            
-            // Elapsed time
-            aTimer += deltaTime;
-            if (aTimer > 3600)
-                aTimer -= 3600;
-            bgTimer++;
-            if (bgTimer < 0)
-                bgTimer -= 300;
-
-            // timer (ex damaged)
-            if (player.timer > 0)
-            player.timer--;
-
-            //GameOver
-            if (player.health < 1) {
-                gameOver = true;
-                pause = true;
             }
         }
-
-            // Pause/Unpause
-            if (lastPress == KEY_ENTER) {
-                pause = !pause;
-                lastPress = null;
-            }
-        }     
-
+        
+        // Elapsed time
+        aTimer += deltaTime;
+        if (aTimer > 3600)
+            aTimer -= 3600;
+        }
+    }
+        
     function paint(ctx) {
         if (background.width) {
             ctx.drawImage(background, 0, bgTimer);
