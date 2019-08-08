@@ -18,11 +18,11 @@
         enemies = []; 
 
         var spritesheet = new Image();
-        var spritesheetP2 = new Image();
-        var spritesheetP3 = new Image();
+        /*var spritesheetP2 = new Image();
+        var spritesheetP3 = new Image();*/
         var background = new Image();
-        spritesheetP2.src = 'assets/spritesheet-p2.png';
-        spritesheetP3.src = 'assets/spritesheet-p3.png';
+        /*spritesheetP2.src = 'assets/spritesheet-p2.png';
+        spritesheetP3.src = 'assets/spritesheet-p3.png';*/
         spritesheet.src = 'assets/spritesheet.png';
         background.src = 'assets/nebula.jpg';
 
@@ -50,25 +50,6 @@
         paint(ctx);
     }
 
-    /*function reset () {
-        score = 0;
-        multiShot = 1;
-        player.x = 90;
-        player.y = 280;
-        player.health = 3,
-        player.timer = 0,
-        shots.length = 0;
-        enemies.length = 0;
-        powerUps.length = 0;
-        messages.length = 0;
-        enemies.push(new Rectangle (30, 0,10, 10, 0, 2));
-        enemies.push(new Rectangle (70, 0,10, 10, 0, 2));
-        enemies.push(new Rectangle (110, 0,10, 10, 0, 2));
-        enemies.push(new Rectangle (150, 0,10, 10, 0, 2));
-        gameOver = false;
-    }*/
-
-
     function act(deltaTime) {
         if (!pause) {
             //Generate Enemy
@@ -84,17 +65,17 @@
                enemies[i].timer--;
 
             // Enemy Shot
-            else if(enemies[i].type == 2) {
+            else if (enemies[i].type == 2) {
                 enemies[i].x += enemies[i].vx;
                 enemies[i].y += enemies[i].vy;
                 // EnemyShot Outside Screen
-                if (enemies[i].x<0||enemies[i].x>canvas.width||enemies[i].y<0||enemies[i].y>canvas.height) {
+                if (enemies[i].x < 0||enemies[i].x > canvas.width || enemies[i].y<0||enemies[i].y>canvas.height) {
                     enemies.splice(i--, 1);
                     l--;
                     continue;
                 }
                  // Player Intersects EnemyShot
-                 if (player.intersects(enemies[i] && player.timer < 1)) {
+                 if (player.intersects(enemies[i] && player.timer) < 1) {
                     player.health--;
                     player.timer = 20;
                 }
@@ -123,7 +104,7 @@
                     enemies[i].timer = 30 + random(30);
                 }
                  // Player Intersects 8Shooter
-                 if (player.intersects(enemies[i] && player.timer < 1)) {
+                 if (player.intersects(enemies[i] && player.timer) < 1) {
                     player.health--;
                     player.timer = 20;
                 }
@@ -132,15 +113,15 @@
                 for (var j = 0, ll = shots.length; j < ll; j++) {
                     if (shots[j].intersects(enemies[i])) {
                         score++;
-                        enemies[i].health --;
+                        enemies[i].health--;
                         if (enemies[i].health < 1) {
-                            enemies.splice(l--, 1);
+                            enemies.splice(i--, 1);
                             l--;
                         }
                         else 
                             enemies[i].timer = 1;
                         shots.splice(j--, 1);
-                        l--;
+                        ll--;
                     
                     
                     }
@@ -156,7 +137,6 @@
     }
         
     function paint(ctx) {
-    
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     
@@ -183,19 +163,19 @@
     }
 
     function Rectangle(x,y,width,height,type,health,vx,vy){
-        this.x=(x==null)?0:x;
-        this.y=(y==null)?0:y;
-        this.vx=(vx==null)?0:vx;
-        this.vy=(vy==null)?0:vy;
-        this.width=(width==null)?0:width;
-        this.height=(height==null)?this.width:height;
-        this.type=(type==null)?1:type;
-        this.health=(health==null)?1:health;
-        this.timer=0;
+        this.x = (x == null) ?0 : x;
+        this.y = (y == null) ?0 : y;
+        this.vx = (vx == null) ?0 : vx;
+        this.vy = (vy == null) ?0 : vy;
+        this.width = (width == null) ?0 : width;
+        this.height = (height == null) ?this.width : height;
+        this.type = (type == null) ?1 : type;
+        this.health = (health == null) ?1 : health;
+        this.timer = 0;
         }
     
     Rectangle.prototype.intersects = function(rect){
-        if(rect!=null){
+        if(rect!=null) {
             return(this.x < rect.x + rect.width &&
                 this.x + this.width > rect.x &&
                 this.y < rect.y + rect.height &&
